@@ -92,7 +92,45 @@ Install TensorFlow using pip:
 pip install tensorflow
 ```
 
-## 4. Project Setup
+## 4. Development Environment
+
+This section details how to set up a development environment with VS Code.
+
+### Python Development Tools
+
+Install `python3-pip` and `python3-venv` to manage Python packages and create virtual environments:
+
+```bash
+sudo apt install -y python3-pip python3-venv
+```
+
+### Visual Studio Code
+
+Install Visual Studio Code, a popular code editor for ROS and Python development.
+
+First, install the Microsoft GPG key and add the VS Code repository:
+
+```bash
+sudo apt install -y software-properties-common apt-transport-https wget gpg
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo install -D -o root -g root -m 644 - /etc/apt/keyrings/packages.microsoft.gpg
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+```
+
+Then, update the package cache and install VS Code:
+
+```bash
+sudo apt update
+sudo apt install -y code
+```
+
+### Recommended VS Code Extensions
+
+After installing VS Code, launch it and install the following extensions for a better development experience with Python and ROS. You can install them from the Extensions view (`Ctrl+Shift+X`) in VS Code.
+
+-   **Python**: `ms-python.python` - Provides rich support for the Python language, including features such as IntelliSense, linting, debugging, and code navigation.
+-   **ROS**: `ms-iot.vscode-ros` - Simplifies ROS development by providing support for ROS build systems, debugging, and visualization of ROS messages.
+
+## 5. Project Setup
 
 Finally, clone the project repository and build the ROS 2 workspace.
 
