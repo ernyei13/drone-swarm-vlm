@@ -9,6 +9,42 @@ This guide provides simplified instructions to build and run a minimal simulatio
 - Colcon
 - pynput (`pip install pynput`)
 
+## Ardupilot
+
+The latest version (4.3.6 at the time of writing) used in this tutorial. You can use steps below to install it:
+
+```
+git clone https://github.com/ArduPilot/ardupilot.git
+cd ardupilot
+git submodule update --init –recursive
+alias waf="$PWD/modules/waf/waf-light"
+waf configure --board=sitl
+waf all
+./Tools/environment_install/install-prereqs-ubuntu.sh -y
+```
+
+## Ardupilot_gazebo
+
+```
+git clone https://github.com/SwiftGust/ardupilot_gazebo
+cd ardupilot_gazebo
+mkdir build
+cd build
+cmake ..
+make -j2
+sudo make install
+```
+
+After installation of this plugin, you need to add lines below inside your bash (bashrc, zshrc, ...):
+
+```
+source /usr/share/gazebo/setup.sh
+export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models:${GAZEBO_MODEL_PATH}
+export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models_gazebo:${GAZEBO_MODEL_PATH}
+export GAZEBO_RESOURCE_PATH=~/ardupilot_gazebo/worlds:${GAZEBO_RESOURCE_PATH}
+export GAZEBO_PLUGIN_PATH=~/ardupilot_gazebo/build:${GAZEBO_PLUGIN_PATH}
+```
+
 ## Build the Workspace
 
 1.  Open a terminal in the root of the project (`/home/zernyei/dev/drone-swarm-vlm`).
@@ -49,54 +85,3 @@ This guide provides simplified instructions to build and run a minimal simulatio
     -   **Q / E**: Move up / down
     -   **Z / C**: Rotate left / right
     -   **Esc**: Stop the drone and exit the keyboard control node.
-
-## Automated Hover
-
-1.  In a new terminal, source the local workspace setup file:
-    ```bash
-    source install/setup.bash
-    ```
-2.  Launch the simplified simulation with an empty world and the hover controller:
-    ```bash
-    ros2 launch simulation_local simple_simulation.launch.py
-    ```
-
-3.  In another new terminal, source the local workspace setup file again:
-    ```bash
-    source install/setup.bash
-    ```
-4.  Run the script to spawn a single drone:
-    ```bash
-    python3 scripts/spawn_single_drone.py
-    ```
-
-Once the drone is spawned, it should automatically hover in the air.
-
-## Manual Control with `ros2 topic pub`
-
-For manual control, you will launch the simulation without the automatic hover node and then publish velocity commands from the command line.
-
-1.  In a new terminal, source the local workspace setup file:
-    ```bash
-    source install/setup.bash
-    ```
-2.  Launch the simulation for manual control:
-    ```bash
-    ros2 launch simulation_local manual_control.launch.py
-    ```
-
-3.  In another new terminal, source the local workspace setup file again:
-    ```bash
-    source install/setup.bash
-    ```
-4.  Run the script to spawn a single drone:
-    ```bash
-    python3 scripts/spawn_single_drone.py
-    ```
-
-5.  In a third terminal (after sourcing `install/setup.bash`), you can now send control commands. Here are some examples:
-
-    **Hover (send this continuously to maintain altitude):**
-    ```bash
-    ros2 topic pub --rate 10 /model/x500_quadcopter/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0, y: 0.0, z: 9.81}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
-    ```
