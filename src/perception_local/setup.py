@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'perception'
+package_name = 'perception_local'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'vlm_node = perception.vlm_node:main',
+            'vlm_node = perception_local.vlm_node:main',
         ],
     },
 )

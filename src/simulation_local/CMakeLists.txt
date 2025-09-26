@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(simulation)
+project(simulation_local)
 
 if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
@@ -13,7 +13,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
-find_package(gazebo_ros REQUIRED)
+find_package(ros_gz_sim REQUIRED)
+find_package(ros_gz_bridge REQUIRED)
 find_package(rclpy REQUIRED)
 
 install(

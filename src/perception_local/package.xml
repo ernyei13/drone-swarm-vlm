@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>perception</name>
+  <name>perception_local</name>
   <version>0.0.0</version>
   <description>VLM-based perception</description>
   <maintainer email="user@todo.todo">user</maintainer>
