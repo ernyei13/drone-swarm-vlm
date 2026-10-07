@@ -1,8 +1,67 @@
 # Drone swarm VLM
 
-A simple MuJoCo simulation with three small quadrotors, closed-loop hover and
-formation flight, and native MJCF environment loading. Python 3.10+; no ROS,
-Gazebo, ArduPilot, or GPU required for physics.
+A Python / MuJoCo testbed for drone formation control: a three-drone starter
+simulation and a six-drone experiment with agents joining and leaving the team.
+Includes native MJCF environment loading and measured flight metrics. Python 3.10+;
+no ROS, Gazebo, ArduPilot, or GPU required for physics.
+
+## Live MuJoCo demo: agents joining and leaving
+
+Six physical drones demonstrate **five → six → five** team membership. Five form a
+pentagon; agent 6 joins at 10 s to form a hexagon; agent 3 leaves at 22 s and flies
+to a parking area while the remaining five reform a pentagon. All six remain real
+free-joint bodies with bounded rotor thrust throughout the simulation.
+
+![Screen recording of the live MuJoCo pentagon–hexagon–pentagon formation](docs/results/open-team-mujoco.gif)
+
+*Screen recording of the native MuJoCo viewer, cropped to the viewport and played
+at 2× speed, using window captures sampled at 6 fps. All visible motion comes
+from the running physical simulation.*
+
+**What you are seeing:**
+
+- The **pink drone (agent 6)** initially waits outside the team, then joins at
+  simulation time 10 s. The five-agent pentagon becomes a six-agent hexagon.
+- The **green drone (agent 3)** leaves the team at 22 s and flies to a parking
+  position. The remaining five agents reform a pentagon.
+- **Blue lines** are current communication links between active members whose
+  measured horizontal separation is below 1.65 m. **White dots** mark desired
+  formation slots. The dark silhouettes on the floor are shadows.
+- All six drones remain physical MuJoCo bodies, including the waiting and
+  departing agents. Membership changes alter coordination, not the body count.
+
+**How it works:** a neighbour-consensus controller tracks relative formation
+positions, with one leader anchoring translation. A centralized quadratic program
+filters velocity references using speed bounds, pairwise separation constraints
+and a retained communication tree. A low-level velocity/altitude and attitude
+controller converts those references into four bounded rotor thrusts per drone;
+MuJoCo integrates the six-degree-of-freedom flight dynamics at 500 Hz.
+
+This is a baseline experiment for [open multi-agent formation research](https://nicdeca.github.io/assets/pdf/Thesis_proposal_Open_Multi_Robot_Systems.pdf),
+using simplified 250 g quadrotors. It does not implement a calibrated Crazyflie
+model or establish a formal safety/stability guarantee for physical flight.
+
+The default measured run has **0.573 m minimum physical separation**, **no contact
+steps**, and a connected active graph throughout (minimum Laplacian λ₂ = 0.382).
+Final shape RMS error is **2.9 cm** after centroid alignment; absolute target RMS
+is **11.2 cm**. [Plots and complete measurement definitions](docs/open-system-demo.md#measured-outputs)
+show both errors, separation and connectivity. These values come from the full
+36-second MuJoCo run at its original physics timestep.
+
+Install the demo extras, then run the **actual MuJoCo viewer** on macOS:
+
+```bash
+python -m pip install -e '.[dev,demo]'
+./.venv/bin/python -m drone_swarm.open_system.macos
+```
+
+Linux / Windows: `python -m drone_swarm.open_system --viewer`.
+For a faster headless physics run and plots: `python -m drone_swarm.open_system`.
+Results are saved to `demo-results/`: formation/safety/connectivity plots, CSV,
+JSON summary, and measured MuJoCo trajectory data.
+
+See [research demo](docs/open-system-demo.md) for model, controller, metrics,
+limitations, and how it relates to the open multi-agent systems thesis proposal.
 
 ## Quick start
 
@@ -90,25 +149,3 @@ flight firmware, obstacle avoidance or task allocation. Keep spawn areas clear a
 choose reachable targets. Environments share a 2 ms timestep and Earth gravity.
 
 MuJoCo installation and macOS viewer guidance: [official Python documentation](https://mujoco.readthedocs.io/en/stable/python.html).
-
-## Open-team research demo (MuJoCo)
-
-Six physical drones demonstrate **five → six → five** team membership. Five form a
-pentagon; agent 6 joins at 10 s to form a hexagon; agent 3 leaves at 22 s and flies
-to a parking area while the remaining five reform a pentagon. All six remain real
-free-joint bodies with bounded rotor thrust throughout the simulation.
-
-Install the demo extras, then run the **actual MuJoCo viewer** on macOS:
-
-```bash
-python -m pip install -e '.[dev,demo]'
-./.venv/bin/python -m drone_swarm.open_system.macos
-```
-
-Linux / Windows: `python -m drone_swarm.open_system --viewer`.
-For a faster headless physics run and plots: `python -m drone_swarm.open_system`.
-Results are saved to `demo-results/`: formation/safety/connectivity plots, CSV,
-JSON summary, and measured MuJoCo trajectory data.
-
-See [research demo](docs/open-system-demo.md) for model, controller, metrics,
-limitations, and how it relates to the open multi-agent systems thesis proposal.
