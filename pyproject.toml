@@ -7,7 +7,7 @@ name = "drone-swarm-vlm"
 version = "0.1.0"
 description = "Small MuJoCo drone swarm simulation with composable environments"
 requires-python = ">=3.10"
-dependencies = ["mujoco>=3.2,<4", "numpy>=1.26,<3"]
+dependencies = ["mujoco>=3.15,<4", "numpy>=1.26,<3"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.9", "build>=1"]
