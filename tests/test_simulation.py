@@ -57,7 +57,21 @@ def test_custom_environment_relative_include_and_mesh(tmp_path):
     )
     sim = SwarmSimulation(path)
     assert sim.model.geom("prop").id >= 0
-    exported = tmp_path / "composed.xml"
+    export_directory = tmp_path / "exports"
+    export_directory.mkdir()
+    exported = export_directory / "composed.xml"
     exported.write_text(sim.spec.to_xml())
     model = mujoco.MjModel.from_xml_path(str(exported))
     assert model.nu == 12
+
+
+def test_moving_formation_keeps_spacing_without_contacts():
+    sim = SwarmSimulation("warehouse")
+    base = sim.targets.copy()
+    for _ in range(10000):
+        phase = max(0, sim.data.time - 3) * 0.3
+        sim.set_targets(base + [0.6 * np.sin(phase), 0.6 * (1 - np.cos(phase)), 0])
+        sim.step()
+        assert sim.data.ncon == 0
+    assert np.allclose(sim.positions[1] - sim.positions[0], base[1] - base[0], atol=0.01)
+    assert np.max(np.linalg.norm(sim.positions - sim.targets, axis=1)) < 0.2

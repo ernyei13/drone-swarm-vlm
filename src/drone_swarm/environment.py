@@ -24,6 +24,11 @@ def load_environment(source: str | Path) -> mujoco.MjSpec:
             )
         path = Path(str(files("drone_swarm").joinpath("environments", f"{source}.xml")))
     spec = mujoco.MjSpec.from_file(str(path.resolve()))
+    # Make exports usable outside the source scene directory without copying assets.
+    for attribute in ("meshdir", "texturedir"):
+        directory = Path(getattr(spec, attribute))
+        if not directory.is_absolute():
+            setattr(spec, attribute, str(path.resolve().parent / directory))
     # Keep the demo physics consistent across environments.
     spec.option.timestep = 0.002
     spec.option.gravity[:] = [0, 0, -9.81]
