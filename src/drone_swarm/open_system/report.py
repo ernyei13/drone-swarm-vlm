@@ -1,4 +1,4 @@
-"""Generate application-demo data, plots and an animation-ready trajectory."""
+"""Generate measured MuJoCo flight data and formation/safety/connectivity plots."""
 
 import argparse
 import csv
@@ -37,7 +37,11 @@ def summary(history, config):
             history["error"][history["time"] < config.leave_time][-1]
         ),
         "minimum_qp_residual": float(history["qp_residual"].min()),
-        "membership_counts": [5, 6, 5],
+        "membership_counts": [
+            int(v)
+            for i, v in enumerate(history["membership"].sum(axis=1))
+            if i == 0 or v != history["membership"][i - 1].sum()
+        ],
         "observed_safety_satisfied": bool(
             history["minimum_physics_distance"][-1] >= config.minimum_distance
         ),

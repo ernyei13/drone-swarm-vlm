@@ -90,3 +90,25 @@ flight firmware, obstacle avoidance or task allocation. Keep spawn areas clear a
 choose reachable targets. Environments share a 2 ms timestep and Earth gravity.
 
 MuJoCo installation and macOS viewer guidance: [official Python documentation](https://mujoco.readthedocs.io/en/stable/python.html).
+
+## Open-team research demo (MuJoCo)
+
+Six physical drones demonstrate **five → six → five** team membership. Five form a
+pentagon; agent 6 joins at 10 s to form a hexagon; agent 3 leaves at 22 s and flies
+to a parking area while the remaining five reform a pentagon. All six remain real
+free-joint bodies with bounded rotor thrust throughout the simulation.
+
+Install the demo extras, then run the **actual MuJoCo viewer** on macOS:
+
+```bash
+python -m pip install -e '.[dev,demo]'
+./.venv/bin/python -m drone_swarm.open_system.macos
+```
+
+Linux / Windows: `python -m drone_swarm.open_system --viewer`.
+For a faster headless physics run and plots: `python -m drone_swarm.open_system`.
+Results are saved to `demo-results/`: formation/safety/connectivity plots, CSV,
+JSON summary, and measured MuJoCo trajectory data.
+
+See [research demo](docs/open-system-demo.md) for model, controller, metrics,
+limitations, and how it relates to the open multi-agent systems thesis proposal.
