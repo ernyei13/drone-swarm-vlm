@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drone-swarm-vlm"
+version = "0.1.0"
+description = "Small MuJoCo drone swarm simulation with composable environments"
+requires-python = ">=3.10"
+dependencies = ["mujoco>=3.15,<4", "numpy>=1.26,<3"]
+
+[project.optional-dependencies]
+demo = ["scipy>=1.11,<2", "matplotlib>=3.8,<4"]
+dev = ["pytest>=8", "ruff>=0.9", "build>=1"]
+
+[project.scripts]
+drone-swarm = "drone_swarm.cli:main"
+open-swarm-demo = "drone_swarm.open_system.report:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+drone_swarm = ["environments/*.xml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+exclude = ["legacy"]

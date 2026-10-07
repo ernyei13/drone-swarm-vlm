@@ -209,3 +209,9 @@ __marimo__/
 
 install
 log
+# Local simulation outputs
+.venv/
+dist/
+.ruff_cache/
+*.png
+demo-results/

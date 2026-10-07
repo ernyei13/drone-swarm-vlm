@@ -1,0 +1,8 @@
+<mujoco model="empty">
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <visual><global offwidth="960" offheight="640"/></visual>
+  <worldbody>
+    <light pos="0 0 6" dir="0 0 -1"/>
+    <geom name="floor" type="plane" size="10 10 0.1" rgba="0.18 0.23 0.28 1"/>
+  </worldbody>
+</mujoco>

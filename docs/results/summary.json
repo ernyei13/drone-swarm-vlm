@@ -1,0 +1,36 @@
+{
+  "physics_contact_steps": 0,
+  "maximum_height_error_m": 0.0014497177459926736,
+  "maximum_actual_xy_speed_m_s": 0.5359492128124403,
+  "model": "MuJoCo 6-DoF quadrotors; first-order consensus references and centralized QP",
+  "config": {
+    "dt": 0.02,
+    "duration": 36.0,
+    "join_time": 10.0,
+    "leave_time": 22.0,
+    "radius": 1.0,
+    "sensing_radius": 1.65,
+    "minimum_distance": 0.35,
+    "safety_buffer": 0.15,
+    "max_component_speed": 0.35,
+    "barrier_gain": 1.5,
+    "seed": 7
+  },
+  "minimum_physical_distance_m": 0.5731304708974306,
+  "minimum_algebraic_connectivity": 0.3819660112501049,
+  "maximum_component_speed_m_s": 0.35,
+  "maximum_vector_speed_m_s": 0.49497474683058323,
+  "final_absolute_target_rms_m": 0.11235551081862931,
+  "final_formation_rms_m": 0.028888219046159826,
+  "pre_join_formation_rms_m": 0.004206917962061332,
+  "pre_leave_formation_rms_m": 0.04284021704773257,
+  "minimum_qp_residual": -4.440892098500626e-16,
+  "membership_counts": [
+    5,
+    6,
+    5
+  ],
+  "observed_safety_satisfied": true,
+  "observed_connectivity_satisfied": true,
+  "caveat": "Observed discrete-time performance, not a proof or hardware validation."
+}
