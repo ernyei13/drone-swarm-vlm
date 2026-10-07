@@ -3,8 +3,8 @@
 The nominal controller uses current sensing neighbours and relative desired offsets.
 A global QP constrains pairwise safety and retained-tree connectivity in the
 first-order reference model. Actual quadrotor motion is integrated by MuJoCo.
-These reference constraints are not a guarantee for the higher-order flight dynamics. This is a baseline experiment, not a decentralized safety controller
-or an implementation of the algorithms cited in the thesis proposal.
+These reference constraints are not a guarantee for the higher-order flight dynamics.
+This is a baseline experiment with a centralized safety filter.
 """
 
 from dataclasses import dataclass

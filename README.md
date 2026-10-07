@@ -37,7 +37,7 @@ and a retained communication tree. A low-level velocity/altitude and attitude
 controller converts those references into four bounded rotor thrusts per drone;
 MuJoCo integrates the six-degree-of-freedom flight dynamics at 500 Hz.
 
-This is a baseline experiment for [open multi-agent formation research](https://nicdeca.github.io/assets/pdf/Thesis_proposal_Open_Multi_Robot_Systems.pdf),
+This is a baseline experiment for open multi-agent formation research,
 using simplified 250 g quadrotors. It does not implement a calibrated Crazyflie
 model or establish a formal safety/stability guarantee for physical flight.
 
@@ -61,7 +61,7 @@ Results are saved to `demo-results/`: formation/safety/connectivity plots, CSV,
 JSON summary, and measured MuJoCo trajectory data.
 
 See [research demo](docs/open-system-demo.md) for model, controller, metrics,
-limitations, and how it relates to the open multi-agent systems thesis proposal.
+and limitations.
 
 ## Quick start
 

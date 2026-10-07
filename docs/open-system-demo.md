@@ -1,9 +1,7 @@
 # Open-team formation with six physical MuJoCo quadrotors
 
-This experiment supports an application for [Experimental Implementation of Open
-Multi-Agent Systems with Crazyflie UAVs](https://nicdeca.github.io/assets/pdf/Thesis_proposal_Open_Multi_Robot_Systems.pdf).
-It addresses dynamic membership, limited communication, bounded commands, and the
-gap between a first-order coordination model and physical flight dynamics.
+This experiment addresses dynamic membership, limited communication, bounded
+commands, and the gap between a first-order coordination model and physical flight dynamics.
 
 ## Run
 
