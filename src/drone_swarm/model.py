@@ -3,7 +3,14 @@
 import mujoco
 
 ROTOR_POSITIONS = ((0.085, 0.085), (-0.085, 0.085), (-0.085, -0.085), (0.085, -0.085))
-COLORS = ((0.2, 0.7, 1, 1), (1, 0.5, 0.2, 1), (0.4, 0.9, 0.4, 1))
+COLORS = (
+    (0.2, 0.7, 1, 1),
+    (1, 0.5, 0.2, 1),
+    (0.4, 0.9, 0.4, 1),
+    (0.7, 0.3, 0.9, 1),
+    (1, 0.85, 0.2, 1),
+    (1, 0.25, 0.5, 1),
+)
 
 
 def drone_spec(color: tuple[float, ...]) -> mujoco.MjSpec:
@@ -26,4 +33,4 @@ def drone_spec(color: tuple[float, ...]) -> mujoco.MjSpec:
 def add_swarm(spec: mujoco.MjSpec, positions) -> None:
     for i, position in enumerate(positions):
         frame = spec.worldbody.add_frame(pos=position)
-        spec.attach(drone_spec(COLORS[i]), prefix=f"drone{i}_", frame=frame)
+        spec.attach(drone_spec(COLORS[i % len(COLORS)]), prefix=f"drone{i}_", frame=frame)
